@@ -79,9 +79,7 @@ export default function EvidenceForm() {
             dateOfCreation,
             license
           })
-      });
-
-     
+      });    
       
     } catch {
       toast.error("Evidence Creation Failed");
@@ -89,7 +87,7 @@ export default function EvidenceForm() {
     }
 
     resetState();
-    toast.success("Evidence Creation Successful!", {position: "top-right"})
+    toast.success("Evidence Creation Successful!");
   }
 
   return (
