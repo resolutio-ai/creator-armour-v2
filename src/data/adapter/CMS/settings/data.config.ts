@@ -124,8 +124,8 @@ export const landingPageData = {
   {
     "heading": "Protect what you create",
     "description": "You want to protect all those great ideas you have? We want you to create them, lots of them, with no worries while we work on protecting your works.",
-    "link": "/coming-soon",
-    "isExternal": true,
+    "link": "/evidence",
+    "isExternal": false,
     "btnText": "Add Artwork"
   },
   lavenderLink:
