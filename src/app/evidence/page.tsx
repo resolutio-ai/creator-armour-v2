@@ -9,8 +9,8 @@ import { LicenseType, WorkMedium } from "@/resources/enums"
 import toast from "react-hot-toast"
 
 export default function EvidenceForm() {
-  const [lastName, setFirstName] = useState<string>("");
-  const [firstName, setLastName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [medium, setMedium] = useState<string>("");
   const [workName, setWorkName] = useState<string>("");
