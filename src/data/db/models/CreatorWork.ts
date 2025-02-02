@@ -10,6 +10,8 @@ export interface ICreatorWork {
     file: string;
     dateOfCreation: Date;
     license: string;
+    ipfsInfo: { name: string, hash: string, size: string };
+    contractId: string;
 }
 
 const CreatorWorkSchema = new Schema<ICreatorWork>(
@@ -32,7 +34,7 @@ const CreatorWorkSchema = new Schema<ICreatorWork>(
         },
         medium: {
             type: String,
-            required: true,            
+            required: true,
             enum: Object.values(WorkMedium)
         },
         file: {
@@ -49,6 +51,10 @@ const CreatorWorkSchema = new Schema<ICreatorWork>(
             default: LicenseType.CcBy,
             enum: Object.values(LicenseType)
         },
+        ipfsInfo: { name: String, hash: String, size: String },
+        contractId: {
+            type: String,
+        }
     },
     {
         timestamps: true,
