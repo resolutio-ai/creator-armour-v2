@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lighthouse-web3/sdk": "^0.3.7",
     "@types/mongoose": "^5.11.97",
     "@types/yup": "^0.32.0",
     "mongodb": "^6.10.0",
