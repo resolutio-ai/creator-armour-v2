@@ -1,13 +1,16 @@
+import { configurationValidation } from '@/resources/schemaValidator/envValidator';
 import mongoose from 'mongoose';
-
-const MONGO_URI = process.env.MONGODB_URI;
 
 export const cached: { connection?: typeof mongoose; promise?: Promise<typeof mongoose> } = {};
 
 async function connectMongo() {
-    if (!MONGO_URI) {
-        throw new Error('Please define the MONGO_URI environment variable inside .env.local');
-    }
+
+    const variables = configurationValidation.validate(process.env, {
+        abortEarly: false
+    }).catch(((error) => {
+        console.error("Missing Environment Keys!", error.errors);
+        process.exit(1);
+    }));
 
     if (cached.connection) {
         return cached.connection;
@@ -17,7 +20,7 @@ async function connectMongo() {
         const opts = {
             bufferCommands: true,
         };
-        cached.promise = mongoose.connect(MONGO_URI, opts);
+        cached.promise = mongoose.connect((await variables).MONGO_URI, opts);
     }
 
     try {
