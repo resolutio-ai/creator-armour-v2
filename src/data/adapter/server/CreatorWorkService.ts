@@ -5,6 +5,8 @@ import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "@/resources/statusCodes";
 import { isMongoError } from "@/resources/utils";
 import { MongoError } from "mongodb";
 import { uploadEvidenceInfo } from "../Integrations/lighthouse";
+import mailService from "../Integrations/email";
+import { MailType } from "@/resources/enums";
 
 class CreatorWorkService {
     private static _instance: CreatorWorkService;
@@ -34,13 +36,22 @@ class CreatorWorkService {
 
             const createWorkResponse = await this._repo.createCreatorWork({ ...model, ipfsInfo: { name: lightHouseResponse.Name, hash: lightHouseResponse.Hash, size: lightHouseResponse.Size } });
 
+            const emailResponse = await mailService.sendEmail(
+                { 
+                    firstName: createWorkResponse.firstName, 
+                    workName: createWorkResponse.workName, 
+                    cid: createWorkResponse?.ipfsInfo?.hash, 
+                    email: createWorkResponse.email 
+                }, MailType.EvidenceCreatedConfirmation);
+
             return ({
                 id: createWorkResponse?._id,
                 workName: createWorkResponse?.workName,
                 dateOfCreation: createWorkResponse?.dateOfCreation,
                 cid: createWorkResponse?.ipfsInfo?.hash,
                 ipfsName: createWorkResponse?.ipfsInfo?.name,
-                ipfsSize: createWorkResponse?.ipfsInfo?.Size
+                ipfsSize: createWorkResponse?.ipfsInfo?.Size,
+                emailResponse
             })
 
         } catch (error: unknown) {
