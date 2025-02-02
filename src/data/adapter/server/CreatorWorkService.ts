@@ -4,6 +4,7 @@ import { HttpException } from "@/resources/errors";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "@/resources/statusCodes";
 import { isMongoError } from "@/resources/utils";
 import { MongoError } from "mongodb";
+import { uploadEvidenceInfo } from "../Integrations/lighthouse";
 
 class CreatorWorkService {
     private static _instance: CreatorWorkService;
@@ -25,13 +26,24 @@ class CreatorWorkService {
         try {
             const existingWork = await this._repo.findCreatorWork(model);
 
-            if (existingWork){
+            if (existingWork) {
                 return existingWork;
             }
 
-            return await this._repo.createCreatorWork(model);
-        } catch (error: unknown) {
+            const lightHouseResponse = await uploadEvidenceInfo({ name: `-${model.dateOfCreation}-${model.email}-${model.workName}`, information: model });
 
+            const createWorkResponse = await this._repo.createCreatorWork({ ...model, ipfsInfo: { name: lightHouseResponse.Name, hash: lightHouseResponse.Hash, size: lightHouseResponse.Size } });
+
+            return ({
+                id: createWorkResponse?._id,
+                workName: createWorkResponse?.workName,
+                dateOfCreation: createWorkResponse?.dateOfCreation,
+                cid: createWorkResponse?.ipfsInfo?.hash,
+                ipfsName: createWorkResponse?.ipfsInfo?.name,
+                ipfsSize: createWorkResponse?.ipfsInfo?.Size
+            })
+
+        } catch (error: unknown) {
             if (isMongoError(error)) {
                 throw new HttpException(INTERNAL_SERVER_ERROR, `MongoError: ${(error as MongoError)?.message}`)
             }
