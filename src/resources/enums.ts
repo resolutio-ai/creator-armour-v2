@@ -17,3 +17,7 @@ export enum LicenseType {
     ResolutioLicense = "Resolutio License",
     YourLicense = "Your Own License",
 }
+
+export enum MailType {
+    EvidenceCreatedConfirmation = 1,    
+}
