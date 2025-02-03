@@ -58,7 +58,7 @@ class EmailService {
 
 <body>
      <div style="
-            width: 50%;
+            width: 70%;
             margin: 5rem auto;
             background: #5f437f;
             padding: 1.2rem;
@@ -68,14 +68,14 @@ class EmailService {
         ">
 
         <h1 style="opacity: 60%; width: 90%;
-            font-size:60px;
+            font-size:30px;
             text-align: center;
             padding: 1.2rem;">
             congratulations
         </h1>
 
         <h3>Hey${firstName ? ` ${firstName}` : ""}!</h3>
-        <p>Your work is now securely stored on ®️ Resolutio On Creator Armour.</p>
+        <p>Your work is now securely stored on Creator Armour.</p>
         <p>Work Name: ${workName}</p>
         <p>Content Identifier (CID): <span style="padding: 4px;
             background: #5f437f; color: white;">${cid} </span></p>
@@ -83,6 +83,8 @@ class EmailService {
         <p style="padding: 4px; border-radius: 5px; background: white; color:#5f437f">
             Click <a href="https://gateway.lighthouse.storage/ipfs/${cid}">Here</a> To View The Details Of Your Work!
         </p>
+        <br />
+         <p>Developed By ®️ Resolutio's 2024 </p>
     </div>
 
 </body>
