@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import NavBar from "@/components/general/navbar";
 import Footer from "@/components/general/footer";
+import MagicProvider from "./context/useMagic";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -30,14 +31,19 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:wght@100..900&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>
-        <NavBar />
-        {children}
-        <Toaster />
-        <Footer />
+        <MagicProvider>
+          <NavBar />
+          {children}
+          <Toaster />
+          <Footer />
+        </MagicProvider>
       </body>
     </html>
   );
