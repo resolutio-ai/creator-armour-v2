@@ -40,7 +40,7 @@ export default function NavBar() {
           } logged in successfully`
         );
       } catch (error) {
-        console.log(error);
+        console.log({ error: error });
       }
     }
   };
