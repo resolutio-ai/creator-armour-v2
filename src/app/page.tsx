@@ -1,8 +1,8 @@
 import DescriptionAndImage from "@/components/general/descriptionAndImage";
-import houseOfMemory from "../../public/landingpage/house-of-memory-image.svg"
-import tornMagazine from "../../public/landingpage/torn-newspaper-mashup.svg"
-import indianMarketplace from "../../public/landingpage/indian-market.svg"
-import liquidMemoirs from "../../public/landingpage/liquid-memories.svg"
+import houseOfMemory from "../../public/landingpage/house-of-memory-image.svg";
+import tornMagazine from "../../public/landingpage/torn-newspaper-mashup.svg";
+import indianMarketplace from "../../public/landingpage/indian-market.svg";
+import liquidMemoirs from "../../public/landingpage/liquid-memories.svg";
 import TextDescriptor from "@/components/general/textDescription";
 import { landingPageData } from "@/data/adapter/CMS/settings/data.config";
 import Blogs from "@/components/general/blogs";
@@ -20,10 +20,14 @@ export default function Home() {
 
   return (
     <section className="mt-[6rem] md:[4rem]">
-
       <DescriptionAndImage
-        headerText={story.heading ?? "the Idea came to you. Create it. Own it. Eternalise it."}
-        subText={story.description ?? "making the Artist as Eternal as your Art."}
+        headerText={
+          story.heading ??
+          "the Idea came to you. Create it. Own it. Eternalise it."
+        }
+        subText={
+          story.description ?? "making the Artist as Eternal as your Art."
+        }
         buttonText={story.btnText ?? "Learn more"}
         buttonUrl={story.link ?? "www.resolutio.ai"}
         isExternal={true}
@@ -32,12 +36,18 @@ export default function Home() {
       />
 
       <TextDescriptor
-        headerText={evidenceInfo.heading ?? "the Idea came to you. Create it. Own it. Eternalise it."}
-        subText={evidenceInfo.description ?? "making the Artist as Eternal as your Art."}
+        headerText={
+          evidenceInfo.heading ??
+          "the Idea came to you. Create it. Own it. Eternalise it."
+        }
+        subText={
+          evidenceInfo.description ??
+          "making the Artist as Eternal as your Art."
+        }
         buttonText={evidenceInfo.btnText ?? "Learn more"}
         buttonUrl={evidenceInfo.link ?? "www.resolutio.ai"}
-        isExternal={evidenceInfo.isExternal ?? true}        
-       />
+        isExternal={evidenceInfo.isExternal ?? true}
+      />
 
       <DescriptionAndImage
         headerText={resolveDispute.heading ?? "Resolve your art dispute"}
@@ -51,21 +61,29 @@ export default function Home() {
       />
 
       <TextDescriptor
-        headerText={community.heading ?? "the Idea came to you. Create it. Own it. Eternalise it."}
-        subText={community.description ?? "making the Artist as Eternal as your Art."}
-        buttonText={community.btnText ??"Learn more"}
+        headerText={
+          community.heading ??
+          "the Idea came to you. Create it. Own it. Eternalise it."
+        }
+        subText={
+          community.description ?? "making the Artist as Eternal as your Art."
+        }
+        buttonText={community.btnText ?? "Learn more"}
         buttonUrl={community.link ?? "www.resolutio.ai"}
         isExternal={community.isExternal ?? true}
       />
-      
+
       <DescriptionAndImage
         headerText={understandingYourRights.heading ?? "Understand your rights"}
-        subText={understandingYourRights.description ??  "Unlock the power of your IP Rights with our AI Bot! Get Answers. Protect Your Art"}
-        buttonText={understandingYourRights.btnText ??  "Learn more"}
+        subText={
+          understandingYourRights.description ??
+          "Unlock the power of your IP Rights with our AI Bot! Get Answers. Protect Your Art"
+        }
+        buttonText={understandingYourRights.btnText ?? "Learn more"}
         buttonUrl={understandingYourRights.link ?? "/evidence"}
         isExternal={understandingYourRights.isExternal ?? false}
         imageAlt="Indian Market Place"
-        imageSrc={understandingYourRights.imageURL ?? indianMarketplace}        
+        imageSrc={understandingYourRights.imageURL ?? indianMarketplace}
       />
 
       <DescriptionAndImage
@@ -81,7 +99,10 @@ export default function Home() {
 
       <DescriptionAndImage
         headerText={eventsAndWorkshops.heading ?? "Understand your rights"}
-        subText={eventsAndWorkshops.description ?? "Unlock the power of your IP Rights with our AI Bot! Get Answers. Protect Your Art"}
+        subText={
+          eventsAndWorkshops.description ??
+          "Unlock the power of your IP Rights with our AI Bot! Get Answers. Protect Your Art"
+        }
         buttonText={eventsAndWorkshops.btnText ?? "Learn more"}
         buttonUrl={eventsAndWorkshops.link ?? "/evidence"}
         isExternal={eventsAndWorkshops.isExternal ?? false}
@@ -90,8 +111,14 @@ export default function Home() {
       />
 
       <TextDescriptor
-        headerText={lavendarCollection.heading ?? "the Idea came to you. Create it. Own it. Eternalise it."}
-        subText={lavendarCollection.description ?? "making the Artist as Eternal as your Art."}
+        headerText={
+          lavendarCollection.heading ??
+          "the Idea came to you. Create it. Own it. Eternalise it."
+        }
+        subText={
+          lavendarCollection.description ??
+          "making the Artist as Eternal as your Art."
+        }
         buttonText={lavendarCollection.btnText ?? "Learn more"}
         buttonUrl={lavendarCollection.link ?? "www.resolutio.ai"}
         isExternal={lavendarCollection.isExternal ?? true}
