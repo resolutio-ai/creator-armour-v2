@@ -90,9 +90,7 @@ export default function NavBar() {
               text={`${isLoggedIn ? "Logout" : "SignIn / Login"}`}
               disabled={false}
               onClick={handleAuth}
-              className={`w-fit bg-primary text-white px-5 py-3 hover:border hover:border-[primary] hover:bg-white hover:text-[#5f437f] ${
-                magic?.user.isLoggedIn() ? "hidden" : "bg-red-600"
-              }`}
+              className={`w-fit bg-primary text-white px-5 py-3 hover:border hover:border-[primary] hover:bg-white hover:text-[#5f437f]`}
             />
           </div>
         </div>
