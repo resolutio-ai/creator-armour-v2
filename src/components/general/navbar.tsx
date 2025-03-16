@@ -31,13 +31,17 @@ export default function NavBar() {
       await magic?.user.logout();
       setIsLoggedIn(false);
     } else {
-      await magic?.wallet.connectWithUI();
-      setIsLoggedIn(true);
-      toast.success(
-        `public address : ${
-          (await magic?.user.getInfo())?.publicAddress
-        } logged in successfully`
-      );
+      try {
+        await magic?.wallet.connectWithUI();
+        setIsLoggedIn(true);
+        toast.success(
+          `public address : ${
+            (await magic?.user.getInfo())?.publicAddress
+          } logged in successfully`
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
