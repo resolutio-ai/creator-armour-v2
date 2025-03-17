@@ -20,10 +20,17 @@ export default function NavBar() {
   useEffect(() => {
     const checkIsLoggedIn = async () => {
       const LoggedIn = await magic?.user.isLoggedIn();
-      console.log(LoggedIn);
       setIsLoggedIn(LoggedIn || false);
     };
+
     checkIsLoggedIn();
+
+    const interval = setInterval(() => {
+      checkIsLoggedIn();
+      console.log("checking for login status");
+    }, 2000);
+
+    return () => clearInterval(interval);
   }, [magic]);
 
   const handleAuth = async () => {
@@ -37,7 +44,13 @@ export default function NavBar() {
         toast.success(
           `public address : ${
             (await magic?.user.getInfo())?.publicAddress
-          } logged in successfully`
+          } \nlogged in successfully`,
+          {
+            style: {
+              maxWidth: "100%",
+              textAlign: "center",
+            },
+          }
         );
       } catch (error) {
         console.log({ error: error });
@@ -70,31 +83,64 @@ export default function NavBar() {
         />
       </div>
 
-      <div className="hidden md:flex">
-        <Button
-          text={`${isLoggedIn ? "Logout" : "SignIn / Login"}`}
-          disabled={false}
-          onClick={handleAuth}
-          className={`w-fit bg-primary text-white px-5 py-3 hover:border hover:border-[primary] hover:bg-white hover:text-[#5f437f] `}
-        />
-      </div>
-      {isNavbarOpen && (
-        <div className="fixed inset-0 bottom-3 max-h-screen w-full bg-white p-4">
+      <div className="flex items-center gap-5">
+        {isLoggedIn ? (
           <div
-            className={`${isNavbarOpen ? "block" : "hidden"} cursor-pointer`}
+            onClick={async () => {
+              await magic?.wallet.showUI();
+            }}
+            className="w-10 h-10 bg-primary rounded-full flex justify-center items-center hover:shadow-lg transition-all"
           >
-            <AiOutlineClose onClick={() => toggleNavBarStatus(!isNavbarOpen)} />
+            {/* could change the svg it to a different file and make it a component for making it cleaner  */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="white"
+              className="size-7"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
           </div>
-          <div className="p-4 flex justify-center items-center">
-            <Button
-              text={`${isLoggedIn ? "Logout" : "SignIn / Login"}`}
-              disabled={false}
-              onClick={handleAuth}
-              className={`w-fit bg-primary text-white px-5 py-3 hover:border hover:border-[primary] hover:bg-white hover:text-[#5f437f]`}
-            />
+        ) : (
+          <div>
+            <div className="hidden md:flex">
+              <Button
+                text={"SignIn / Login"}
+                disabled={false}
+                onClick={handleAuth}
+                className={`w-fit bg-primary text-white px-5 py-3 hover:border hover:border-[primary] hover:bg-white hover:text-[#5f437f] `}
+              />
+            </div>
+            {isNavbarOpen && (
+              <div className="fixed inset-0 bottom-3 max-h-screen w-full bg-white p-4">
+                <div
+                  className={`${
+                    isNavbarOpen ? "block" : "hidden"
+                  } cursor-pointer`}
+                >
+                  <AiOutlineClose
+                    onClick={() => toggleNavBarStatus(!isNavbarOpen)}
+                  />
+                </div>
+                <div className="p-4 flex justify-center items-center">
+                  <Button
+                    text={"SignIn / Login"}
+                    disabled={false}
+                    onClick={handleAuth}
+                    className={`w-fit bg-primary text-white px-5 py-3 hover:border hover:border-[primary] hover:bg-white hover:text-[#5f437f]`}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
     // On mobile screen show Hamburger on click of
   );
