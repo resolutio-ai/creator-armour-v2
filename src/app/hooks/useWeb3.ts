@@ -9,7 +9,7 @@ const useWeb3 = () => {
 
   useEffect(() => {
     if (magic) {
-      setWeb3(new Web3((magic as Magic).rpcProvider));
+      setWeb3(new Web3((magic as unknown as Magic).rpcProvider));
     } else {
       console.log("Magic is not initialized");
     }
