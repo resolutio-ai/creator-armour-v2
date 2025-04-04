@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import NavBar from "@/components/general/navbar";
 import Footer from "@/components/general/footer";
 import MagicProvider from "./context/useMagic";
+import { Provider } from "./context/Provider";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -39,10 +40,12 @@ export default function RootLayout({
       </head>
       <body>
         <MagicProvider>
-          <NavBar />
-          {children}
-          <Toaster />
-          <Footer />
+          <Provider>
+            <NavBar />
+            {children}
+            <Toaster />
+            <Footer />
+          </Provider>
         </MagicProvider>
       </body>
     </html>

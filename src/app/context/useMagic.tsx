@@ -33,8 +33,10 @@ const MagicProvider = ({ children }: { children: ReactNode }) => {
         {
           extensions: [new OAuthExtension()],
           network: {
-            rpcUrl: `https://sepolia.infura.io/v3/${process.env.SECRET_API_KEY}`,
-            chainId: 11155111,
+            rpcUrl: `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_API_KEY}`,
+            chainId: process.env.NEXT_PUBLIC_CHAIN_ID
+              ? parseInt(process.env.NEXT_PUBLIC_CHAIN_ID)
+              : 11155111,
           },
         }
       );

@@ -3,47 +3,50 @@ import { MailType } from "@/resources/enums";
 import { createTransport } from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 
-
 class EmailService {
-    private static _instance: EmailService;
+  private static _instance: EmailService;
 
-    private _transport: Mail;
+  private _transport: Mail;
 
-    private constructor() {
-        this._transport = createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_ADDRESS,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
+  private constructor() {
+    this._transport = createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+  }
+
+  public static get instance() {
+    if (!this._instance) {
+      this._instance = new EmailService();
     }
+    return this._instance;
+  }
 
-    public static get instance() {
-        if (!this._instance) {
-            this._instance = new EmailService;
-        }
-        return this._instance;
+  sendEmail = async (mailBody: UserMailDTO, mailType: MailType) => {
+    const mailOptions = this.getMailOptions(mailBody, mailType);
+
+    const sendMailResponse = await this._transport.sendMail(mailOptions);
+
+    return { message: "Email Sent", sentEmail: !sendMailResponse };
+  };
+
+  private getMailOptions(mailBody: UserMailDTO, mailType: MailType): MailDTO {
+    switch (mailType) {
+      case MailType.EvidenceCreatedConfirmation:
+        return this.getEvidenceCreatedMailOptions(mailBody);
     }
+  }
 
-    sendEmail = async (mailBody: UserMailDTO, mailType: MailType) => {
-
-        const mailOptions = this.getMailOptions(mailBody, mailType);
-
-        const sendMailResponse = await this._transport.sendMail(mailOptions);
-
-        return { message: "Email Sent", sentEmail: !sendMailResponse }
-    }   
-
-    private getMailOptions(mailBody: UserMailDTO, mailType: MailType): MailDTO {
-        switch (mailType) {
-            case MailType.EvidenceCreatedConfirmation:
-                return this.getEvidenceCreatedMailOptions(mailBody);
-        }
-    }
-
-    private getEvidenceCreatedMailOptions = ({ email, firstName, workName, cid }: UserMailDTO) => {
-        const body = `<!DOCTYPE html>
+  private getEvidenceCreatedMailOptions = ({
+    email,
+    firstName,
+    workName,
+    cid,
+  }: UserMailDTO) => {
+    const body = `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -89,18 +92,16 @@ class EmailService {
 
 </body>
 
-</html>`
+</html>`;
 
-        return {
-            body,
-            subject: "Congrats: Your Work Has Been Eternalized",
-            to: email,
-            html: body,
-            from: process.env.EMAIL_ADDRESS,
-        };
-    }
-
-
+    return {
+      body,
+      subject: "Congrats: Your Work Has Been Eternalized",
+      to: email,
+      html: body,
+      from: process.env.EMAIL_ADDRESS,
+    };
+  };
 }
 
 const mailService = EmailService.instance;

@@ -9,6 +9,8 @@ import { LicenseType, WorkMedium } from "@/resources/enums";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useMagic } from "@/app/context/useMagic";
+import { useWalletClient } from "wagmi";
+import { WagmiContractConfig } from "@/app/contracts/contractConfig";
 
 export const Form = () => {
   const [lastName, setLastName] = useState<string>("");
@@ -23,9 +25,20 @@ export const Form = () => {
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
   const { magic } = useMagic();
   const router = useRouter();
+  const { data: walletClient } = useWalletClient();
 
   // Add ref for the file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const writeToChain = async (data: string) => {
+    const metaData = JSON.stringify(data);
+    await walletClient?.writeContract({
+      abi: WagmiContractConfig.abi,
+      address: WagmiContractConfig.address,
+      functionName: "mintNFT",
+      args: [metaData],
+    });
+  };
 
   useEffect(() => {
     const checkIsLoggedIn = async () => {
@@ -35,7 +48,6 @@ export const Form = () => {
 
       try {
         const loggedIn = await magic?.user.isLoggedIn();
-        console.log("User Logged In", loggedIn);
 
         if (!loggedIn) {
           toast.error("Please Login to access this page");
@@ -111,7 +123,7 @@ export const Form = () => {
     const fileAsBase64 = await toBase64(file as File);
 
     try {
-      await fetch("/api/creatorworks", {
+      const res = await fetch("/api/creatorworks", {
         method: "POST",
         body: JSON.stringify({
           lastName,
@@ -124,6 +136,10 @@ export const Form = () => {
           license,
         }),
       });
+      const data = await res.json();
+      if (data) {
+        writeToChain(data);
+      }
     } catch {
       toast.error("Evidence Creation Failed");
       return;
